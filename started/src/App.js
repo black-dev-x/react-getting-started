@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function Button() {
-  const [counter, setCounter] = useState(5)
-  const handleClick = _ => setCounter(counter*2)
+function Button(props) {
   return (
-  <button onClick={handleClick}>
-    {counter}
+  <button onClick={props.action}>
+    +1
   </button>
   )
 }
 
-function Display() {
+function Display(props) {
   return (
-    <div>....</div>
+    <div>{props.message}</div>
   )
 }
 
 function App() {
+  const [counter, setCounter] = useState(1)
+  const incrementCounter = () => setCounter(counter + 1)
   return (
     <div>
-      <Button></Button>
-      <Display></Display>
+      <Button action={incrementCounter}></Button>
+      <Display message={counter}></Display>
     </div>
   )
 }
