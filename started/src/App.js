@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
-function Hello() {
-  return <div>Hello React!</div>
+function Button() {
+  const [counter, updateCounter] = useState(0)
+  return <button onClick={()=>updateCounter(counter + 1)}>{counter}</button>
 }
 
 function App() {
-  return <Hello></Hello>;
+  return <Button></Button>;
 }
 
 export default App;
