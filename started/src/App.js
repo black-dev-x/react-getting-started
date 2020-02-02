@@ -1,22 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-
-function Button(props) {
-
-  const click = () => props.action(props.increment)
-  
-  return (
-  <button onClick={click}>
-    +{props.increment}
-  </button>
-  )
-}
-
-function Display(props) {
-  return (
-    <div>{props.message}</div>
-  )
-}
+import { Button } from './basics/Button';
+import { Display } from './basics/Display';
 
 function App() {
   const [counter, setCounter] = useState(0)
