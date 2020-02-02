@@ -1,8 +1,12 @@
 import React from 'react';
 import './App.css';
 
+function Hello() {
+  return <div>Hello React!</div>
+}
+
 function App() {
-  return (<h1>Hi</h1>);
+  return <Hello></Hello>;
 }
 
 export default App;
