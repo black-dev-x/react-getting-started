@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import axios from 'axios';
 
 const testData = [
   {name: "Dan Abramov", avatar_url: "https://avatars0.githubusercontent.com/u/810438?v=4", company: "@facebook"},
@@ -9,17 +10,19 @@ const testData = [
 
 class Form extends React.Component {
 
-  userNameInput = React.createRef()
+  state = { userName: ''}
 
   handleSubmit = event => {
     event.preventDefault()
-    console.log(this.userNameInput.current.value)
+    console.log(this.state.userName)
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="gitHub username" ref={this.userNameInput} required/>
+        <input type="text" placeholder="gitHub username" 
+          value={this.state.userName} onChange={event => this.setState({ userName: event.target.value})} 
+          required/>
         <button>Add card</button>
       </form>
     )
