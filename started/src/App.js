@@ -7,14 +7,21 @@ const testData = [
   {name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook"},
 ];
 
+const CardList = (props) => (
+  <div>
+    <Card></Card>
+  </div>
+)
+
 class Card extends React.Component {
   render() {
+    const profile = testData[0]
     return( 
     <div className="github-profile">
-      <img src="https://placehold.it/75"/>
+      <img src={profile.avatar_url}/>
       <div className="info">
-        <div className="name">Name here...</div>
-        <div className="company">Company here...</div>
+        <div className="name">{profile.name}</div>
+        <div className="company">{profile.company}</div>
       </div>
     </div>
     )
@@ -26,7 +33,7 @@ class App extends React.Component {
     return (
       <div>
         <div className="header">{this.props.title}</div>
-        <Card></Card>
+        <CardList></CardList>
       </div>
     )
   }
