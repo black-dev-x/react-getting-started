@@ -7,15 +7,26 @@ const testData = [
   {name: "Sebastian Markbåge", avatar_url: "https://avatars2.githubusercontent.com/u/63648?v=4", company: "Facebook"},
 ];
 
+class Form extends React.Component {
+  render() {
+    return (
+      <form action="">
+        <input type="text" placeholder="gitHub username"/>
+        <button>Add card</button>
+      </form>
+    )
+  }
+}
+
 const CardList = (props) => (
   <div>
-    <Card></Card>
+    {testData.map(profile => <Card {...profile}></Card>)}
   </div>
 )
 
 class Card extends React.Component {
   render() {
-    const profile = testData[0]
+    const profile = this.props;
     return( 
     <div className="github-profile">
       <img src={profile.avatar_url}/>
@@ -33,6 +44,7 @@ class App extends React.Component {
     return (
       <div>
         <div className="header">{this.props.title}</div>
+        <Form></Form>
         <CardList></CardList>
       </div>
     )
