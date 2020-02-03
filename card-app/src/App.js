@@ -27,7 +27,7 @@ class Form extends React.Component {
 
 const CardList = (props) => (
   <div>
-    {props.profiles.map(profile => <Card {...profile}></Card>)}
+    {props.profiles.map(profile => <Card key={profile.id} {...profile}></Card>)}
   </div>
 )
 
