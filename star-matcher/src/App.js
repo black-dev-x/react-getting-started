@@ -15,13 +15,17 @@ const StarMatch = () => {
           {utils.range(1, stars).map(starId => <div key={starId} className="star"/>)}
         </div>
         <div className="right">
-          {utils.range(1, 9).map(buttonValue => <button key={`btn${buttonValue}`} className="number">{buttonValue}</button>)}
+          {utils.range(1, 9).map(value => <PlayNumber key={value} value={value}></PlayNumber>)}
         </div>
       </div>
       <div className="timer">Time Remaining: 10</div>
     </div>
   );
 };
+
+const PlayNumber = ({value}) => {
+  return <button className="number" onClick={()=>console.log('Num', value)}>{value}</button>
+}
 
 // Color Theme
 const colors = {
