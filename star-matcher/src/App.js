@@ -3,7 +3,7 @@ import './App.css';
 
 const StarMatch = () => {
 
-  const [stars, setStars] = useState(utils.random(1,9))
+  const [stars] = useState(utils.random(1,9))
 
   return (
     <div className="game">
@@ -12,7 +12,7 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-          {utils.range(1, stars).map(starId => <div key={starId} className="star"/>)}
+          <StarsDisplay count={stars}></StarsDisplay>
         </div>
         <div className="right">
           {utils.range(1, 9).map(value => <PlayNumber key={value} value={value}></PlayNumber>)}
@@ -22,6 +22,10 @@ const StarMatch = () => {
     </div>
   );
 };
+
+const StarsDisplay = ({count}) => {
+  return utils.range(1, count).map(starId => <div key={starId} className="star"/>);
+}
 
 const PlayNumber = ({value}) => {
   return <button className="number" onClick={()=>console.log('Num', value)}>{value}</button>
