@@ -4,6 +4,8 @@ import './App.css';
 const StarMatch = () => {
 
   const [stars] = useState(utils.random(1,9))
+  const [availableNumbers, setAvailableNumbers] = useState([1, 2, 3, 4, 5])
+  const [candidateNumbers, setCandidateNumbers] = useState([2, 3])
 
   return (
     <div className="game">
