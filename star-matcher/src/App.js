@@ -7,6 +7,18 @@ const StarMatch = () => {
   const [availableNumbers, setAvailableNumbers] = useState([1, 2, 3, 4, 5])
   const [candidateNumbers, setCandidateNumbers] = useState([2, 3])
 
+  const candidatesAreWrong = utils.sum(candidateNumbers) > stars;
+
+  const numberStatus = number => {
+    if(!availableNumbers.includes(number)){
+      return 'used'
+    }
+    if(candidateNumbers.includes(number)){
+      return candidatesAreWrong ? 'wrong' : 'candidate'
+    }
+    return 'available'
+  }
+
   return (
     <div className="game">
       <div className="help">
@@ -17,7 +29,12 @@ const StarMatch = () => {
           <StarsDisplay count={stars}></StarsDisplay>
         </div>
         <div className="right">
-          {utils.range(1, 9).map(value => <PlayNumber key={value} value={value}></PlayNumber>)}
+          {utils.range(1, 9).map(value => 
+            <PlayNumber 
+              key={value}
+              status={numberStatus(value)}
+              value={value}>
+            </PlayNumber>)}
         </div>
       </div>
       <div className="timer">Time Remaining: 10</div>
@@ -29,9 +46,14 @@ const StarsDisplay = ({count}) => {
   return utils.range(1, count).map(starId => <div key={starId} className="star"/>);
 }
 
-const PlayNumber = ({value}) => {
-  return <button className="number" onClick={()=>console.log('Num', value)}>{value}</button>
-}
+const PlayNumber = (props) => (
+  <button 
+    className="number" 
+    style={{backgroundColor: colors[props.status]}}
+    onClick={()=>console.log('Num', props.value)}>
+    {props.value}
+  </button>
+)
 
 // Color Theme
 const colors = {
