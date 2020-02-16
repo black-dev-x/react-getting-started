@@ -3,9 +3,9 @@ import './App.css';
 
 const StarMatch = () => {
 
-  const [stars] = useState(utils.random(1,9))
-  const [availableNumbers, setAvailableNumbers] = useState([1, 2, 3, 4, 5])
-  const [candidateNumbers, setCandidateNumbers] = useState([2, 3])
+  const [stars, setStars] = useState(utils.random(1,9))
+  const [availableNumbers, setAvailableNumbers] = useState(utils.range(1,9))
+  const [candidateNumbers, setCandidateNumbers] = useState([])
 
   const candidatesAreWrong = utils.sum(candidateNumbers) > stars;
 
@@ -17,6 +17,25 @@ const StarMatch = () => {
       return candidatesAreWrong ? 'wrong' : 'candidate'
     }
     return 'available'
+  }
+
+  const onNumberClicked = (value, status) => {
+    
+    if(status === 'used') {
+      return;
+    }
+    const newCandidateNumbs = status === 'available' ? 
+      candidateNumbers.concat(value) :
+      candidateNumbers.filter(n => value !== n)
+
+      if(utils.sum(newCandidateNumbs) !== stars){
+      setCandidateNumbers(newCandidateNumbs)
+    } else {
+      const newAvailableNumbers = availableNumbers.filter(n => !newCandidateNumbs.includes(n))
+      setAvailableNumbers(newAvailableNumbers)
+      setCandidateNumbers([])
+      setStars(utils.randomSumIn(newAvailableNumbers, 9))
+    }
   }
 
   return (
@@ -33,7 +52,8 @@ const StarMatch = () => {
             <PlayNumber 
               key={value}
               status={numberStatus(value)}
-              value={value}>
+              value={value}
+              onClick={onNumberClicked}>
             </PlayNumber>)}
         </div>
       </div>
@@ -50,7 +70,7 @@ const PlayNumber = (props) => (
   <button 
     className="number" 
     style={{backgroundColor: colors[props.status]}}
-    onClick={()=>console.log('Num', props.value)}>
+    onClick={() => props.onClick(props.value, props.status)}>
     {props.value}
   </button>
 )
