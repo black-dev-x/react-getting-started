@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const StarMatch = () => {
@@ -6,13 +6,25 @@ const StarMatch = () => {
   const [stars, setStars] = useState(utils.random(1,9))
   const [availableNumbers, setAvailableNumbers] = useState(utils.range(1,9))
   const [candidateNumbers, setCandidateNumbers] = useState([])
-  const gameIsDone = availableNumbers.length === 0
-  const candidatesAreWrong = utils.sum(candidateNumbers) > stars;
+  const [secondsLeft, setSecondsLeft] = useState(10)
+
+  useEffect(() => {
+    if(secondsLeft > 0 && availableNumbers.length > 0){
+      const timerId = setTimeout( () => setSecondsLeft(secondsLeft - 1), 1000)
+      return () => clearTimeout(timerId)
+    }
+  }) 
+
+  const gameStatus = availableNumbers.length === 0 ? 'won' :
+    secondsLeft === 0 ? 'lost' : 'ongoing'
+
+  const candidatesAreWrong = utils.sum(candidateNumbers) > stars
   
   const resetGame = () => {
     setStars(utils.random(1,9))
     setAvailableNumbers(utils.range(1,9))
     setCandidateNumbers([])
+    setSecondsLeft(10)
   }
 
   const numberStatus = number => {
@@ -51,8 +63,8 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-          {gameIsDone ? 
-            (<PlayAgain reset={resetGame}></PlayAgain>) :
+          {gameStatus !== 'ongoing' ? 
+            (<PlayAgain reset={resetGame} status={gameStatus}></PlayAgain>) :
             (<StarsDisplay count={stars}></StarsDisplay>)
           }
         </div>
@@ -66,7 +78,7 @@ const StarMatch = () => {
             </PlayNumber>)}
         </div>
       </div>
-      <div className="timer">Time Remaining: 10</div>
+      <div className="timer">Time Remaining: {secondsLeft}</div>
     </div>
   );
 };
@@ -86,6 +98,9 @@ const PlayNumber = (props) => (
 
 const PlayAgain = (props) => (
   <div className="game-done">
+    <div className="message" style={{color: props.status === 'lost'? 'red':'green'}}>
+      {props.status === 'lost' ? 'Game Over' : 'Nice!'}
+    </div>
     <button onClick={props.reset}>Play Again</button>
   </div>
 )
