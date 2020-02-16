@@ -6,8 +6,14 @@ const StarMatch = () => {
   const [stars, setStars] = useState(utils.random(1,9))
   const [availableNumbers, setAvailableNumbers] = useState(utils.range(1,9))
   const [candidateNumbers, setCandidateNumbers] = useState([])
-
+  const gameIsDone = availableNumbers.length === 0
   const candidatesAreWrong = utils.sum(candidateNumbers) > stars;
+  
+  const resetGame = () => {
+    setStars(utils.random(1,9))
+    setAvailableNumbers(utils.range(1,9))
+    setCandidateNumbers([])
+  }
 
   const numberStatus = number => {
     if(!availableNumbers.includes(number)){
@@ -45,7 +51,10 @@ const StarMatch = () => {
       </div>
       <div className="body">
         <div className="left">
-          <StarsDisplay count={stars}></StarsDisplay>
+          {gameIsDone ? 
+            (<PlayAgain reset={resetGame}></PlayAgain>) :
+            (<StarsDisplay count={stars}></StarsDisplay>)
+          }
         </div>
         <div className="right">
           {utils.range(1, 9).map(value => 
@@ -73,6 +82,12 @@ const PlayNumber = (props) => (
     onClick={() => props.onClick(props.value, props.status)}>
     {props.value}
   </button>
+)
+
+const PlayAgain = (props) => (
+  <div className="game-done">
+    <button onClick={props.reset}>Play Again</button>
+  </div>
 )
 
 // Color Theme
