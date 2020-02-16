@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-const StarMatch = () => {
+const Game = (props) => {
 
   const [stars, setStars] = useState(utils.random(1,9))
   const [availableNumbers, setAvailableNumbers] = useState(utils.range(1,9))
@@ -21,10 +21,7 @@ const StarMatch = () => {
   const candidatesAreWrong = utils.sum(candidateNumbers) > stars
   
   const resetGame = () => {
-    setStars(utils.random(1,9))
-    setAvailableNumbers(utils.range(1,9))
-    setCandidateNumbers([])
-    setSecondsLeft(10)
+    props.reset()
   }
 
   const numberStatus = number => {
@@ -39,7 +36,7 @@ const StarMatch = () => {
 
   const onNumberClicked = (value, status) => {
     
-    if(status === 'used') {
+    if(status === 'used' || gameStatus !== 'ongoing') {
       return;
     }
     const newCandidateNumbs = status === 'available' ? 
@@ -82,6 +79,12 @@ const StarMatch = () => {
     </div>
   );
 };
+
+const StarMatch = () => {
+  const [gameId, setGameId] = useState(1)
+  const reset = () => setGameId(gameId + 1)
+  return <Game key={gameId} reset={reset}></Game>
+}
 
 const StarsDisplay = ({count}) => {
   return utils.range(1, count).map(starId => <div key={starId} className="star"/>);
