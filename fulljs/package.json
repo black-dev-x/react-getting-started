@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev-server": "nodemon --exect babel-node src/server/server.js --ignore dist/*"
+    "dev-server": "nodemon --exect babel-node src/server/server.js --ignore dist/"
   },
   "author": "",
   "license": "ISC",
